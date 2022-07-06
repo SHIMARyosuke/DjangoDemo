@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from snippets.models import Snippet
 from django.http import HttpResponse
 
@@ -18,7 +18,9 @@ def snippet_edit(request, snippet_id):
     return HttpResponse('スニペットの編集')
 
 def snippet_detail(request, snippet_id):
-    return HttpResponse('スニペットの詳細閲覧')
+    # get_object_or_404は、DBからデータが見つからなかった場合 django.http.Http404例外を投げる
+    snippet = get_object_or_404(Snippet, pk=snippet_id)
+    return render(request, 'snippets/snippet_detail.html', {'snippet': snippet})
 
 # 登録処理
 # POST /snippets/new/
