@@ -1,10 +1,13 @@
 from django.shortcuts import render
+from snippets.models import Snippet
 from django.http import HttpResponse
 
 # スニペットお一覧を表示
 # GET /
 def top(request):
-    return HttpResponse(b"Hello World")
+    snippets = Snippet.objects.all()
+    context = {"snippets": snippets}
+    return render(request, "snippets/top.html", context)
 
 # スニペットの登録フォームの表示
 # GET /snippets/new/
