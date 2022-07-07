@@ -3,9 +3,11 @@ from snippets.models import Snippet
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from snippets.forms import SnippetForm
+
+from django.views.decorators.http import require_safe, require_http_methods
 # スニペットお一覧を表示
 # GET /
-
+@require_safe
 def top(request):
     snippets = Snippet.objects.all()
     context = {"snippets": snippets}
@@ -14,6 +16,7 @@ def top(request):
 # スニペットの登録フォームの表示
 # GET /snippets/new/
 @login_required
+@require_http_methods(["GET","POST","HEAD"])
 def snippet_new(request):
     if request.method == 'POST':
         form = SnippetForm(request.POST)
