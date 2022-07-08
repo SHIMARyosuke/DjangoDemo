@@ -1,14 +1,12 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Django スニペット</title>
-  </head>
-  <body>
-    <h1>スニペットの登録</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">保存</button>
-    </form>
-  </body>
-</html>
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block main %}
+<h2>スニペットの編集</h2>
+<form method="post">
+  {% csrf_token %}
+  <!-- 下記1行で、django-bootstrap5の機能によって、Bootstrap 5 で装飾された HTMLフォームを生成する -->
+  {% bootstrap_form form %}
+  {% bootstrap_button button_type="submit" content="保存" %}
+</form>
+{% endblock %}
