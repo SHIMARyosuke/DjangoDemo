@@ -13,3 +13,8 @@ class Snippet(models.Model):
 
     def __str__(self):
         return self.title
+
+    # Meta オプション
+    class Meta:
+        # テーブル名を明示的に指定する
+        db_table = 'snippets'
