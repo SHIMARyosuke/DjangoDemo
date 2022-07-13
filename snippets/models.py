@@ -1,6 +1,11 @@
 from django.conf import settings
 from django.db import models
 
+class DraftSnippetManager(models.Manager):
+    # 下書き状態のスニペットを返す
+    def get_queryset(self):
+        return super().get_queryset().filter(is_draft=True)
+
 class Snippet(models.Model):
     title = models.CharField('タイトル', max_length=128)
     code = models.TextField('コード', blank=True)
@@ -11,6 +16,10 @@ class Snippet(models.Model):
     is_draft = models.BooleanField('下書き', default=False)
     created_at = models.DateTimeField("投稿日", auto_now_add=True)
     updated_at = models.DateTimeField("更新日", auto_now=True)
+
+    # モデルマネージャの読み込み
+    objects = models.Manager()
+    drafts = DraftSnippetManager()
 
     def __str__(self):
         return f'{self.pk} {self.title}'
