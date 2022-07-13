@@ -8,6 +8,7 @@ class Snippet(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    verbose_name="投稿者",
                                    on_delete=models.CASCADE)
+    is_draft = models.BooleanField('下書き', default=False)
     created_at = models.DateTimeField("投稿日", auto_now_add=True)
     updated_at = models.DateTimeField("更新日", auto_now=True)
 
