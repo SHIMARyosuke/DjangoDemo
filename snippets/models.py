@@ -1,6 +1,18 @@
 from django.conf import settings
 from django.db import models
 
+
+class SnippetQuerySet(models.QuerySet):
+    # 下書き状態のスニペットを返す
+    def drafts(self):
+        return self.filter(is_draft=False)
+
+    # 直近に更新されたスニペットを返す
+    def recent_updates(self):
+        return self.order_by('-updated_at')
+
+    recent_updates.queryset_only = True
+
 class DraftSnippetManager(models.Manager):
     # 下書き状態のスニペットを返す
     def get_queryset(self):
@@ -20,6 +32,13 @@ class Snippet(models.Model):
     # モデルマネージャの読み込み
     objects = models.Manager()
     drafts = DraftSnippetManager()
+
+    # QuerySetを使いたい場合
+    # objects = SnippetQuerySet.as_manager()
+
+    # マネージャとQuerySetを同時に使いたい場合
+    # from_querysetメソッドは、QuerySetを受け取って Manager クラスを生成するため、さらに括弧が必要
+    # objects = DraftSnippetManager.from_queryset(SnippetQuerySet)()
 
     def __str__(self):
         return f'{self.pk} {self.title}'

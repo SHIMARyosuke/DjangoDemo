@@ -42,6 +42,12 @@ INSTALLED_APPS = [
 
     'snippets.apps.SnippetsConfig',
     'accounts.apps.AccountsConfig',
+
+    # Django CMS 用
+    'django.contrib.sites',
+    'cms',
+    'menus',
+    'treebeard',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +155,6 @@ LOGGING = {
         },
     }
 }
+
+# Django CMS 用
+SITE_ID = 1
